@@ -1,0 +1,79 @@
+#!/bin/sh
+# Uses clit to convert .lit files to valid epub
+# known issues: created metadata uses the old spec
+ 
+CLIT=$(which clit)
+
+if [ "$?" != 0 ]; then
+    echo "Can't find clit, please make sure it is in your path"
+    exit 1
+fi
+
+ZIP=$(which zip)
+
+if [ "$?" != 0 ]; then
+    echo "Can't find zip, please make sure it is in your path"
+    exit 1
+fi
+
+LIT=$1
+
+if [ "x$LIT" = "x" ]; then
+    echo "$0 <file.lit> [file.epub]"
+    exit 1;
+fi
+
+
+if [ "x$2" = "x" ]; then
+    EPUB=$(echo $1 |  sed -e 's/.lit/.epub/')
+else 
+    EPUB=$2
+fi
+
+
+MKTEMP=$(which mktemp)
+
+if [ "$?" != 0 ]; then
+    if [ ! -e /tmp/epub ]; then
+        mkdir /tmp/epub
+    else
+        echo "/tmp/epub already exists please erase it first"
+        exit 1
+    fi
+    
+else
+    TEMPDIR=$($MKTEMP -d)
+fi
+
+WD=$(pwd)
+
+IFS=$'\n'
+
+$CLIT $LIT $TEMPDIR/OEBPS/
+find "$TEMPDIR"/OEBPS/ -name "*.opf" -exec mv {} "$TEMPDIR"/OEBPS/content.opf \;
+unset $IFS
+
+mkdir "$TEMPDIR/META-INF"
+
+cat << EOF > "$TEMPDIR/META-INF/container.xml"
+<?xml version="1.0"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>
+ 
+EOF
+
+echo -n application/epub+zip > "$TEMPDIR"/mimetype
+
+IFS=$'\n'
+cd "$TEMPDIR"
+
+$ZIP -0 -m "$WD/$EPUB" mimetype
+$ZIP -rg "$WD/$EPUB" *
+
+cd $WD
+unset $IFS
+
+rm -rf $TEMPDIR

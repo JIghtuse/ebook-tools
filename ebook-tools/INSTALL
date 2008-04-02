@@ -1,0 +1,32 @@
+Requirements
+------------
+This project depends on:
+
+- libzip which you can get from http://www.nih.at/libzip/
+
+- libxml2 which you can get from http://xmlsoft.org/ 
+
+- cmake (www.cmake.org)
+
+To use the lit2epub script you also need to have:
+
+- clit (or convertlit) from http://www.convertlit.com/
+
+- zip I used the one from http://www.info-zip.org/
+
+note that clit might be not legal in some countries, so check it before
+you decide to download it.
+
+Install
+-------
+Installing is pretty simple
+
+cmake . 
+
+works fine in most cases do ccmake . if you have to fiddle with the 
+configuration for some reason.
+
+make
+
+make install
+
