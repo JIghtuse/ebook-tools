@@ -1,0 +1,60 @@
+Source: ebook-tools
+Priority: extra
+Maintainer: Pino Toscano <pino@kde.org>
+Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.50),
+     libxml2-dev, libzip-dev
+Standards-Version: 3.7.2
+Section: libs
+
+Package: libepub-dev
+Section: libdevel
+Architecture: any
+Depends: libepub0 (= ${binary:Version})
+Description: library and tools to work with the EPub file format
+ The ebook-tools provide ways for accessing and converting different
+ ebook file formats.
+ .
+ This C library is free and portable. It includes classes to parse
+ EPub files and extract their contents.
+ .
+ This package includes development headers and libraries.
+
+Package: libepub0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: library and tools to work with the EPub file format
+ The ebook-tools provide ways for accessing and converting different
+ ebook file formats.
+ .
+ This C library is free and portable. It includes classes to parse
+ EPub files and extract their contents.
+
+Package: epub-dbg
+Section: libdevel
+Architecture: any
+Depends: libepub5 (= ${binary:Version})
+Description: library and tools to work with the EPub file format
+ The ebook-tools provide ways for accessing and converting different
+ ebook file formats.
+ .
+ This C library is free and portable. It includes classes to parse
+ EPub files and extract their contents.
+ .
+ This package includes the debug symbols for the library.
+
+Package: epub-utils
+Section: graphics
+Architecture: any
+Depends: libepub0 (>= ${binary:Version})
+Description: library and tools to work with the EPub file format
+ The ebook-tools provide ways for accessing and converting different
+ ebook file formats.
+ .
+ This C library is free and portable. It includes classes to parse
+ EPub files and extract their contents.
+ .
+ This package contains the following utilities:
+  - einfo           : provides some basic info about an EPub document,
+                      such as metadata, reading order, etc.
+  - li2epub         : converts a LIT file to EPub (using clit).
