@@ -1,7 +1,7 @@
 Source: ebook-tools
 Priority: extra
 Maintainer: Pino Toscano <pino@kde.org>
-Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.50),
+Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.51),
      libxml2-dev, libzip-dev
 Standards-Version: 3.7.2
 Section: libs
