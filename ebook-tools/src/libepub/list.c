@@ -232,7 +232,7 @@ void _list_dump_date(struct date *date) {
 }
 
 void _list_dump_guide(struct guide *guide) {
-  printf("   %s -> %s(%s)\n", guide->href, guide->title, guide->type);
+  printf("   %s -> %s(%s)\n", guide->title, guide->href, guide->type);
 }
 
 void _list_dump_site(struct site *site) {

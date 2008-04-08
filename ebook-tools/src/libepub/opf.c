@@ -782,8 +782,8 @@ void _opf_parse_guide(struct opf *opf, xmlTextReaderPtr reader) {
     
     struct guide *item = malloc(sizeof(struct guide));
     item->type = xmlTextReaderGetAttribute(reader, (xmlChar *)"type");
-    item->title = xmlTextReaderGetAttribute(reader, (xmlChar *)"href");
-    item->href = xmlTextReaderGetAttribute(reader, (xmlChar *)"title");
+    item->title = xmlTextReaderGetAttribute(reader, (xmlChar *)"title");
+    item->href = xmlTextReaderGetAttribute(reader, (xmlChar *)"href");
 
     _epub_print_debug(opf->epub, DEBUG_INFO, 
                       "guide item: %s href: %s type: %s", 
