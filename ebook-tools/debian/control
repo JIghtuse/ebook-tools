@@ -33,6 +33,7 @@ Description: library and tools to work with the EPub file format
 Package: ebook-tools-dbg
 Section: libdevel
 Architecture: any
+Priority: extra
 Depends: libc6-dbg, libepub0 (= ${binary:Version})
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
@@ -46,7 +47,7 @@ Description: library and tools to work with the EPub file format
 Package: epub-utils
 Section: graphics
 Architecture: any
-Depends: libepub0 (>= ${binary:Version})
+Depends: libc6, libepub0 (= ${binary:Version})
 Suggests: clit, zip
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
