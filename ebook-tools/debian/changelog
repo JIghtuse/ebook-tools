@@ -1,6 +1,6 @@
 ebook-tools (0.1.0-1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release (Closes: #431809)
 
  -- Pino Toscano <pino@kde.org>  Sun, 06 Apr 2008 17:23:13 +0200
 
