@@ -811,6 +811,9 @@ listPtr _opf_parse_tour(struct opf *opf, xmlTextReaderPtr reader) {
     struct site *item = malloc(sizeof(struct site));
     item->title = xmlTextReaderGetAttribute(reader, (xmlChar *)"title");
     item->href = xmlTextReaderGetAttribute(reader, (xmlChar *)"href");
+    _epub_print_debug(opf->epub, DEBUG_INFO, 
+                      "site: %s href: %s", 
+                      item->title, item->href);
     AddNode(tour, NewListNode(tour, item));
 
     ret = xmlTextReaderRead(reader);
@@ -826,11 +829,9 @@ void _opf_parse_tours(struct opf *opf, xmlTextReaderPtr reader) {
   opf->tours = NewListAlloc(LIST, NULL, NULL, NULL);
 
   ret = xmlTextReaderRead(reader);
-  xmlChar *local = (xmlChar *)xmlTextReaderConstName(reader);
   
   while (ret == 1 && 
-         xmlStrcasecmp(local,(xmlChar *)"tours")) {
-    
+         xmlStrcasecmp(xmlTextReaderConstName(reader), (xmlChar *)"tours")) {
     
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
@@ -838,22 +839,18 @@ void _opf_parse_tours(struct opf *opf, xmlTextReaderPtr reader) {
       continue;
     }
     
-    if (xmlStrcasecmp(local, (xmlChar *)"tour") == 0) {
-      struct tour *item = malloc(sizeof(struct tour));
-      
-      item->title = xmlTextReaderGetAttribute(reader, (xmlChar *)"title");
-      item->id = xmlTextReaderGetAttribute(reader, (xmlChar *)"id");
-      item->sites = _opf_parse_tour(opf, reader);
+    struct tour *item = malloc(sizeof(struct tour));
+   
+    item->title = xmlTextReaderGetAttribute(reader, (xmlChar *)"title");
+    item->id = xmlTextReaderGetAttribute(reader, (xmlChar *)"id");
+    _epub_print_debug(opf->epub, DEBUG_INFO, 
+                      "tour: %s id: %s", 
+                      item->title, item->id);
+    item->sites = _opf_parse_tour(opf, reader);
+    AddNode(opf->tours, NewListNode(opf->tours, item));
 
-      AddNode(opf->tours, NewListNode(opf->tours, item));
-    }
-    
-    free(local);
-    local = (xmlChar *)xmlTextReaderConstName(reader);
     ret = xmlTextReaderRead(reader);
   }
-
-  free(local);
 }
 
 xmlChar *_opf_label_get_by_lang(struct opf *opf, listPtr label, char *lang) {

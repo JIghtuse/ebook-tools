@@ -236,7 +236,7 @@ void _list_dump_guide(struct guide *guide) {
 }
 
 void _list_dump_site(struct site *site) {
-  printf("site: %s(%s)\n", site->title, site->href);
+  printf("   %s(%s)\n", site->title, site->href);
 }
 
 void _list_dump_tour(struct tour *tour) {
