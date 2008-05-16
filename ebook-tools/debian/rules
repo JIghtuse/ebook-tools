@@ -3,7 +3,6 @@
 #export DH_VERBOSE=1
 
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
-DEB_DH_STRIP_ARGS = --dbg-package=libepub0
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk

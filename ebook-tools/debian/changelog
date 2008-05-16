@@ -1,6 +1,6 @@
 ebook-tools (0.1.0-1) unstable; urgency=low
 
-  * Initial release (Closes: #431809)
+  * Initial release (Closes: #475513)
 
- -- Pino Toscano <pino@kde.org>  Sun, 06 Apr 2008 17:23:13 +0200
+ -- Pino Toscano <pino@kde.org>  Sun, 16 Apr 2008 21:22:47 +0200
 

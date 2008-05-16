@@ -1,10 +1,13 @@
 Source: ebook-tools
-Priority: extra
+Priority: optional
 Maintainer: Pino Toscano <pino@kde.org>
 Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.51),
      libxml2-dev, libzip-dev
-Standards-Version: 3.7.2
+Standards-Version: 3.7.3
 Section: libs
+Homepage: http://sourceforge.net/projects/ebook-tools
+Vcs-Browser: http://ebook-tools.svn.sourceforge.net/viewvc/ebook-tools/branches/0.1/ebook-tools/
+Vcs-SVN: http://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools/branches/0.1/ebook-tools
 
 Package: libepub-dev
 Section: libdevel
@@ -14,7 +17,7 @@ Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
  .
- This C library is free and portable. It includes classes to parse
+ This C library is free and portable. It includes methods to parse
  EPub files and extract their contents.
  .
  This package includes development headers and libraries.
@@ -27,18 +30,19 @@ Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
  .
- This C library is free and portable. It includes classes to parse
+ This C library is free and portable. It includes methods to parse
  EPub files and extract their contents.
 
-Package: epub-dbg
+Package: ebook-tools-dbg
 Section: libdevel
 Architecture: any
-Depends: libepub5 (= ${binary:Version})
+Priority: extra
+Depends: libc6-dbg, libepub0 (= ${binary:Version})
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
  .
- This C library is free and portable. It includes classes to parse
+ This C library is free and portable. It includes methods to parse
  EPub files and extract their contents.
  .
  This package includes the debug symbols for the library.
@@ -46,15 +50,13 @@ Description: library and tools to work with the EPub file format
 Package: epub-utils
 Section: graphics
 Architecture: any
-Depends: libepub0 (>= ${binary:Version})
+Depends: ${shlibs:Depends}
+Suggests: clit, zip
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
  .
- This C library is free and portable. It includes classes to parse
- EPub files and extract their contents.
- .
  This package contains the following utilities:
   - einfo           : provides some basic info about an EPub document,
                       such as metadata, reading order, etc.
-  - li2epub         : converts a LIT file to EPub (using clit).
+  - lit2epub        : converts a LIT file to EPub (using clit).
