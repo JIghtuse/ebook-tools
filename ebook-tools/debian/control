@@ -7,7 +7,7 @@ Standards-Version: 3.7.3
 Section: libs
 Homepage: http://sourceforge.net/projects/ebook-tools
 Vcs-Browser: http://ebook-tools.svn.sourceforge.net/viewvc/ebook-tools/branches/0.1/ebook-tools/
-Vcs-SVN: http://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools/branches/0.1/ebook-tools
+Vcs-Svn: http://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools/branches/0.1/ebook-tools
 
 Package: libepub-dev
 Section: libdevel
