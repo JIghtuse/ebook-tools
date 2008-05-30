@@ -80,6 +80,10 @@ int main(int argc , char **argv) {
       }
   }
   
+  if (! filename) {
+    usage(1);
+  }
+  
   if (debug)
       verbose = 4;
   
