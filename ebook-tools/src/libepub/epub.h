@@ -27,12 +27,26 @@ extern "C" {
   /**
      This function sets the debug level to the given level.
      
+     @param filename is the name of the file to open
      @param debug is the debug level (0=none, 1=errors, 2=warnings, 3=info)
   */
   void epub_set_debug(struct epub *epub, int debug);
-  
+
+  /** 
+      returns the file with the give filename
+
+      @param epub struct of the epub file we want to read from
+      @param filename the name of the file we want to read
+      @param pointer to where the file data is stored
+      @return the number of bytes read
+  */
   int epub_get_ocf_file(struct epub *epub, const char *filename, char **data);
   
+  /** 
+      Frees the memory held by the given iterator
+      
+      @param it the iterator
+  */
   void epub_free_iterator(struct eiterator *it);
 
   /** 
@@ -59,30 +73,118 @@ extern "C" {
   unsigned char **epub_get_metadata(struct epub *epub, enum epub_metadata type,
                                     int *size);
 
+  /** 
+      returns the file with the give filename. The file is looked
+      for in the data directory. (Useful for getting book files). 
+
+      @param epub struct of the epub file we want to read from
+      @param filename the name of the file we want to read
+      @param pointer to where the file data is stored
+      @return the number of bytes read
+  */
   int epub_get_data(struct epub *epub, const char *name, char **data);
 
+  
+  /** 
+      Returns a book iterator of the requested type
+      for the given epub struct.
+      
+      @param epub struct of the epub file
+      @param type the iterator type
+      @param opt other options (ignored for now)
+      @return eiterator to the epub book
+  */
   struct eiterator *epub_get_iterator(struct epub *epub, 
                                       enum eiterator_type type, int opt);
 
+  /**
+     updates the iterator to the next element and returns a pointer 
+     to the data. the iterator handles the freeing of the memory.
+     
+     @param it the iterator
+     @return pointer to the data
+  */
   char *epub_it_get_next(struct eiterator *it);
 
+  /**
+     Returns a pointer to the iterator's data. the iterator handles 
+     the freeing of the memory.
+     
+     @param it the iterator
+     @return pointer to the data
+  */
   char *epub_it_get_curr(struct eiterator *it);
   
+  /**
+     Returns a pointer to the url of the iterator's current data. 
+     the iterator handles the freeing of the memory.
+     
+     @param it the iterator
+     @return pointer to the current data's url
+  */
   char *epub_it_get_curr_url(struct eiterator *it);
 
+  /** 
+      Returns a book toc iterator of the requested type
+      for the given epub struct.
+      
+      @param epub struct of the epub file
+      @param type the iterator type
+      @param opt other options (ignored for now)
+      @return toc iterator to the epub book
+  */
   struct titerator *epub_get_titerator(struct epub *epub, 
                                        enum titerator_type type, int opt);
 
-  int epub_tit_curr_valid(struct titerator *tit);
+  
+  /**
+     Returns 1 if the current entry is valid and 0 otherwise. 
 
+     @param tit the iterator
+     @return 1 if the current entry is valid and 0 otherwise 
+  */
+  int epub_tit_curr_valid(struct titerator *tit);
+  
+  /**
+     Returns a pointer to the depth of the toc iterator's current entry. 
+     the iterator handles the freeing of the memory.
+     
+     @param tit the iterator
+     @return pointer to the current entry's depth
+  */
   int epub_tit_get_curr_depth(struct titerator *tit);
 
+  /**
+     Returns a pointer to the link of the toc iterator's current entry. 
+     the iterator handles the freeing of the memory.
+     
+     @param tit the iterator
+     @return the current entry's depth
+  */
   char *epub_tit_get_curr_link(struct titerator *tit);
 
+  /**
+     Returns a pointer to the label of the toc iterator's current entry. 
+     the iterator handles the freeing of the memory.
+     
+     @param tit the iterator
+     @return pointer to the current entry's lable
+  */
   char *epub_tit_get_curr_label(struct titerator *tit);
 
+  /** 
+      Frees the memory held by the given iterator
+      
+      @param tit the iterator
+  */
   void epub_free_titerator(struct titerator *tit);
   
+  /**
+     updates the iterator to the next element.
+     
+     @param tit the iterator
+     @return 1 on success and 0 otherwise
+  */
   int epub_tit_next(struct titerator *tit);
 
   /**

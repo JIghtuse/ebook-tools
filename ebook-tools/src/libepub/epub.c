@@ -511,8 +511,6 @@ void epub_free_titerator(struct titerator *tit) {
   free(tit);
 }
   
-
-
 int epub_get_ocf_file(struct epub *epub, const char *filename, char **data) {
   return _ocf_get_file(epub->ocf, filename, data);
 }
