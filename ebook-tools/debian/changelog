@@ -5,8 +5,12 @@ ebook-tools (0.1.0-2) unstable; urgency=low
   * debian/ebook-tools-dbg.lintian-overrides:
     + override the lintian warning about the "ebook-tools" package,
       as the real package that needs debug symbols is libepub0
+  * debian/einfo.1:
+  * debian/lit2epub.1:
+  * debian/rules:
+    + add manpages for einfo(1) and lit2epub(1)
 
- -- Pino Toscano <pino@kde.org>  Fri, 30 May 2008 11:59:26 +0200
+ -- Pino Toscano <pino@kde.org>  Fri, 30 May 2008 13:14:03 +0200
 
 ebook-tools (0.1.0-1) unstable; urgency=low
 
