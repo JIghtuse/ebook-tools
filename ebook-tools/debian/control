@@ -5,6 +5,9 @@ Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.51),
      libxml2-dev, libzip-dev
 Standards-Version: 3.7.3
 Section: libs
+Homepage: http://sourceforge.net/projects/ebook-tools
+Vcs-Browser: http://ebook-tools.svn.sourceforge.net/viewvc/ebook-tools/branches/0.1/ebook-tools/
+Vcs-Svn: http://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools/branches/0.1/ebook-tools
 
 Package: libepub-dev
 Section: libdevel
@@ -34,7 +37,7 @@ Package: ebook-tools-dbg
 Section: libdevel
 Architecture: any
 Priority: extra
-Depends: libc6-dbg, libepub0 (= ${binary:Version})
+Depends: libepub0 (= ${binary:Version})
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
@@ -47,14 +50,11 @@ Description: library and tools to work with the EPub file format
 Package: epub-utils
 Section: graphics
 Architecture: any
-Depends: libc6, libepub0 (= ${binary:Version})
+Depends: ${shlibs:Depends}
 Suggests: clit, zip
 Description: library and tools to work with the EPub file format
  The ebook-tools provide ways for accessing and converting different
  ebook file formats.
- .
- This C library is free and portable. It includes methods to parse
- EPub files and extract their contents.
  .
  This package contains the following utilities:
   - einfo           : provides some basic info about an EPub document,
