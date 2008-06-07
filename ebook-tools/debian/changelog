@@ -1,5 +1,7 @@
-ebook-tools (0.1.0-2) unstable; urgency=low
+ebook-tools (0.1.1-1) unstable; urgency=low
 
+  * New upstream release.
+  * Bump Standards-Version to 3.8.0. No changes needed.
   * debian/control:
     + ebook-tools-dbg: remove dependency on libc6-dbg
   * debian/ebook-tools-dbg.lintian-overrides:
@@ -10,7 +12,7 @@ ebook-tools (0.1.0-2) unstable; urgency=low
   * debian/rules:
     + add manpages for einfo(1) and lit2epub(1)
 
- -- Pino Toscano <pino@kde.org>  Fri, 30 May 2008 13:14:03 +0200
+ -- Pino Toscano <pino@kde.org>  Fri, 07 Jun 2008 22:00:47 +0200
 
 ebook-tools (0.1.0-1) unstable; urgency=low
 

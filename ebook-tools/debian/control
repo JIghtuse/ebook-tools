@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Pino Toscano <pino@kde.org>
 Build-Depends: debhelper (>= 5), cmake (>= 2.4.0), cdbs (>= 0.4.51),
      libxml2-dev, libzip-dev
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 Section: libs
 Homepage: http://sourceforge.net/projects/ebook-tools
 Vcs-Browser: http://ebook-tools.svn.sourceforge.net/viewvc/ebook-tools/branches/0.1/ebook-tools/
