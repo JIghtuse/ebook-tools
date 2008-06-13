@@ -47,7 +47,8 @@ fi
 
 WD=$(pwd)
 
-IFS=$'\n'
+IFS='
+'
 
 $CLIT $LIT $TEMPDIR/OEBPS/
 find "$TEMPDIR"/OEBPS/ -name "*.opf" -exec mv {} "$TEMPDIR"/OEBPS/content.opf \;
@@ -65,9 +66,10 @@ cat << EOF > "$TEMPDIR/META-INF/container.xml"
  
 EOF
 
-echo -n application/epub+zip > "$TEMPDIR"/mimetype
+printf 'application/epub+zip' > "$TEMPDIR"/mimetype
 
-IFS=$'\n'
+IFS='
+'
 cd "$TEMPDIR"
 
 $ZIP -0 -m "$WD/$EPUB" mimetype
