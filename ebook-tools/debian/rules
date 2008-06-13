@@ -5,6 +5,7 @@
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DEB_INSTALL_MANPAGES_epub-utils = debian/einfo.1 debian/lit2epub.1
 
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
 include /usr/share/cdbs/1/rules/utils.mk

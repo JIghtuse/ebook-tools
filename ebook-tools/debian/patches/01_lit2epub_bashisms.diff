@@ -1,0 +1,27 @@
+Index: ebook-tools/src/tools/lit2epub
+===================================================================
+--- ebook-tools/src/tools/lit2epub	(revision 92)
++++ ebook-tools/src/tools/lit2epub	(revision 93)
+@@ -47,7 +47,8 @@
+ 
+ WD=$(pwd)
+ 
+-IFS=$'\n'
++IFS='
++'
+ 
+ $CLIT $LIT $TEMPDIR/OEBPS/
+ find "$TEMPDIR"/OEBPS/ -name "*.opf" -exec mv {} "$TEMPDIR"/OEBPS/content.opf \;
+@@ -65,9 +66,10 @@
+  
+ EOF
+ 
+-echo -n application/epub+zip > "$TEMPDIR"/mimetype
++printf 'application/epub+zip' > "$TEMPDIR"/mimetype
+ 
+-IFS=$'\n'
++IFS='
++'
+ cd "$TEMPDIR"
+ 
+ $ZIP -0 -m "$WD/$EPUB" mimetype

@@ -1,3 +1,13 @@
+ebook-tools (0.1.1-2) unstable; urgency=low
+
+  * add patch 01_lit2epub_bashisms.diff:
+    + fixes bashisms in lit2epub (Closes: #486031)
+    + taken from upstream r93
+  * debian/rules:
+    + add build-dependency on quilt
+
+ -- Pino Toscano <pino@kde.org>  Sat, 14 Jun 2008 00:18:42 +0200
+
 ebook-tools (0.1.1-1) unstable; urgency=low
 
   * New upstream release.
