@@ -35,8 +35,7 @@ struct epub *epub_open(const char *filename, int debug) {
     epub->ocf->datapath[index - opfName + 1] = 0;
   }    
   else {
-    epub->ocf->datapath[0] = '/';
-    epub->ocf->datapath[1] = 0;
+    epub->ocf->datapath[0] = 0;
   }
 
   _epub_print_debug(epub, DEBUG_INFO, "data path is %s", epub->ocf->datapath );
@@ -494,7 +493,8 @@ int epub_tit_curr_valid(struct titerator *tit) {
 }
 
 char *epub_tit_get_curr_label(struct titerator *tit) {
-  return strdup(tit->cache.label);
+  // FIXME how can there be unlabeled curr?
+  return tit->cache.label?strdup(tit->cache.label):NULL;
 }
 
 int epub_tit_get_curr_depth(struct titerator *tit) {
