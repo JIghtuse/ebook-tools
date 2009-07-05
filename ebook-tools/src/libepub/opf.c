@@ -18,7 +18,7 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
    if (reader != NULL) {
     ret = xmlTextReaderRead(reader);
     while (ret == 1) {
-      const xmlChar *name = xmlTextReaderConstName(reader);
+      const xmlChar *name = xmlTextReaderConstLocalName(reader);
       if (xmlStrcmp(name, (xmlChar *)"metadata") == 0)
         _opf_parse_metadata(opf, reader);
       else 
@@ -122,7 +122,7 @@ void _opf_parse_metadata(struct opf *opf, xmlTextReaderPtr reader) {
   
   ret = xmlTextReaderRead(reader);
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"metadata")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader),(xmlChar *)"metadata")) {
 
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
