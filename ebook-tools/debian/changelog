@@ -1,3 +1,15 @@
+ebook-tools (0.1.1-3) unstable; urgency=low
+
+  * Change epub-utils suggests clit and zip into recommends convlit and zip.
+    (Closes: #529852)
+  * As debhelper is used, add ${misc:Depends} to the depends of the binary
+    packages.
+  * Change the section of ebook-tools-dbg to debug.
+  * Remove lintian override for ebook-tools-dbg, no more needed now.
+  * Bump Standards-Version to 3.8.1. No changes needed.
+
+ -- Pino Toscano <pino@kde.org>  Fri, 22 May 2009 23:44:12 +0200
+
 ebook-tools (0.1.1-2) unstable; urgency=low
 
   * add patch 01_lit2epub_bashisms.diff:
