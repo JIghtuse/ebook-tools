@@ -1,6 +1,16 @@
 #ifndef EPUB_SHARED_H
 #define EPUB_SHARED_H 1
 
+#ifdef _WIN32
+# ifdef epub_EXPORTS
+#  define EPUB_EXPORT __declspec(dllexport)
+# else
+#  define EPUB_EXPORT __declspec(dllimport)
+# endif
+#else
+# define EPUB_EXPORT
+#endif
+
 /**
    Metadata types
  */

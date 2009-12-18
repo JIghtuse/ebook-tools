@@ -16,6 +16,18 @@
 #include "linklist.h"
 #include "epub_shared.h"
 
+// General definitions
+#ifdef _WIN32
+# define PATH_SEPARATOR '\\'
+#else
+# define PATH_SEPARATOR '/'
+#endif
+
+// MSVC-specific definitions
+#ifdef _MSC_VER
+# define strdup _strdup
+#endif
+
 ///////////////////////////////////////////////////////////
 // OCF definions
 ///////////////////////////////////////////////////////////
