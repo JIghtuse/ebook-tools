@@ -8,6 +8,7 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
   opf->guide = NULL;
   opf->tours = NULL;
   opf->toc = NULL;
+  opf->spine = NULL;
   
  
   xmlTextReaderPtr reader;
@@ -41,7 +42,10 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
     if (ret != 0) {
       _epub_print_debug(opf->epub, DEBUG_ERROR, "failed to parse OPF");
       return NULL;
-    }
+    } else if(!opf->spine) {
+		_epub_print_debug(opf->epub, DEBUG_ERROR, "Ilegal OPF no spine found");
+		return NULL;
+	}
    } else {
      _epub_print_debug(opf->epub, DEBUG_ERROR, "unable to open OPF");
      return NULL;
@@ -189,7 +193,7 @@ void _opf_parse_metadata(struct opf *opf, xmlTextReaderPtr reader) {
       new->event = _get_possible_namespace(reader, (xmlChar *)"event",
                                                (xmlChar *)"opf");
       AddNode(meta->date, NewListNode(meta->date, new));
-      _epub_print_debug(opf->epub, DEBUG_INFO, "date is %s: %s", 
+      _epub_print_debug(opf->epub, DEBUG_INFO, "date of %s: %s", 
                         new->event, new->date); 
         
     } else if (xmlStrcasecmp(local, (xmlChar *)"subject") == 0) {
@@ -682,7 +686,7 @@ void _opf_parse_spine(struct opf *opf, xmlTextReaderPtr reader) {
   
   ret = xmlTextReaderRead(reader);
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader), (xmlChar *)"spine")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader), (xmlChar *)"spine")) {
   
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
@@ -724,7 +728,7 @@ void _opf_parse_manifest(struct opf *opf, xmlTextReaderPtr reader) {
   ret = xmlTextReaderRead(reader);
 
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"manifest")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader),(xmlChar *)"manifest")) {
     struct manifest *item;
 
     // ignore non starting tags
@@ -772,7 +776,7 @@ void _opf_parse_guide(struct opf *opf, xmlTextReaderPtr reader) {
 
   ret = xmlTextReaderRead(reader);
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"guides")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader),(xmlChar *)"guides")) {
 
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
@@ -800,7 +804,7 @@ listPtr _opf_parse_tour(struct opf *opf, xmlTextReaderPtr reader) {
   ret = xmlTextReaderRead(reader);
   
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"tour")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader),(xmlChar *)"tour")) {
 
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
@@ -831,7 +835,7 @@ void _opf_parse_tours(struct opf *opf, xmlTextReaderPtr reader) {
   ret = xmlTextReaderRead(reader);
   
   while (ret == 1 && 
-         xmlStrcasecmp(xmlTextReaderConstName(reader), (xmlChar *)"tours")) {
+         xmlStrcasecmp(xmlTextReaderConstLocalName(reader), (xmlChar *)"tours")) {
     
     // ignore non starting tags
     if (xmlTextReaderNodeType(reader) != 1) {
