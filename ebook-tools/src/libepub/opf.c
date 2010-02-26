@@ -4,12 +4,8 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
   _epub_print_debug(epub, DEBUG_INFO, "building opf struct");
   
   struct opf *opf = malloc(sizeof(struct opf));
+  memset(opf, 0, sizeof(struct opf));
   opf->epub = epub;
-  opf->guide = NULL;
-  opf->tours = NULL;
-  opf->toc = NULL;
-  opf->spine = NULL;
-  
  
   xmlTextReaderPtr reader;
   int ret;
@@ -249,13 +245,8 @@ void _opf_parse_metadata(struct opf *opf, xmlTextReaderPtr reader) {
 struct toc *_opf_init_toc() {
   
   struct toc *toc = malloc(sizeof(struct toc));
-  
-  if (! toc)
-    return NULL;
- 
-  toc->navMap = NULL;
-  toc->pageList = NULL;
-  toc->navList = NULL;
+  memset(toc, 0, sizeof(struct toc));
+
   toc->playOrder = NewListAlloc(LIST, NULL, NULL, 
                                 (NodeCompareFunc)_list_cmp_toc_by_playorder);
 
@@ -264,9 +255,7 @@ struct toc *_opf_init_toc() {
 
 struct tocCategory *_opf_init_toc_category() {
   struct tocCategory *tc = malloc(sizeof(struct tocCategory));
-
-  tc->id = NULL;
-  tc->class = NULL;
+  memset(tc, 0, sizeof(struct tocCategory));
 
   tc->info = NewListAlloc(LIST, NULL, NULL, NULL); //tocLabel
   tc->label = NewListAlloc(LIST, NULL, NULL, NULL); //tocLabel
@@ -309,6 +298,7 @@ struct tocLabel *_opf_parse_navlabel(struct opf *opf, xmlTextReaderPtr reader) {
   int ret;
   
   struct tocLabel *new = malloc(sizeof(struct tocLabel));
+  memset(new, 0, sizeof(struct tocLabel));
 
   new->lang = xmlTextReaderGetAttribute(reader, (xmlChar *)"lang");
   new->dir = xmlTextReaderGetAttribute(reader, (xmlChar *)"dir");
@@ -336,13 +326,9 @@ struct tocLabel *_opf_parse_navlabel(struct opf *opf, xmlTextReaderPtr reader) {
 
 struct tocItem *_opf_init_toc_item(int depth) {
   struct tocItem *item = malloc(sizeof(struct tocItem));
+  memset(item, 0, sizeof(struct tocItem));
 
-  item->label = NULL;
-  item->type = NULL;
-  item->src = NULL;
   item->depth = depth;
-  item->id = NULL;
-  item->class = NULL;
   item->playOrder = -1;
   item->value = -1;
 
@@ -695,6 +681,7 @@ void _opf_parse_spine(struct opf *opf, xmlTextReaderPtr reader) {
     }
 
     struct spine *item = malloc(sizeof(struct spine));
+	memset(item, 0, sizeof(struct spine));
 
     item->idref = xmlTextReaderGetAttribute(reader, (xmlChar *)"idref");
     linear = xmlTextReaderGetAttribute(reader, (xmlChar *)"linear");
