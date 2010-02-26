@@ -21,7 +21,7 @@ int _ocf_parse_container(struct ocf *ocf) {
   _epub_print_debug(ocf->epub, DEBUG_INFO, "parsing container file %s", 
                     METAINFO_DIR "/" CONTAINER_FILENAME);
 
-  char *containerXml;
+  char *containerXml = NULL;
   char *name = CONTAINER_FILENAME;
   if (! _ocf_get_file(ocf, METAINFO_DIR "/" CONTAINER_FILENAME, &containerXml))
     return 0;
@@ -33,25 +33,38 @@ int _ocf_parse_container(struct ocf *ocf) {
                               name, NULL, 0);
   if (reader != NULL) {
     ret = xmlTextReaderRead(reader);
-    while (ret == 1) {
 
-      if (xmlStrcmp(xmlTextReaderConstName(reader), 
-                    (xmlChar *)"rootfile") == 0) {
-        struct root *newroot = malloc(sizeof(struct root));
-        newroot->mediatype = 
-          xmlTextReaderGetAttribute(reader, (xmlChar *)"media-type");
-        newroot->fullpath =
-          xmlTextReaderGetAttribute(reader, (xmlChar *)"full-path");
-        AddNode(ocf->roots, NewListNode(ocf->roots, newroot));
-  
-        _epub_print_debug(ocf->epub, DEBUG_INFO, 
-                          "found root in %s media-type is %s",
-                          newroot->fullpath, newroot->mediatype);
-      }
-
-      ret = xmlTextReaderRead(reader);
-    }
-
+	while (ret == 1) {
+		// Checking for container tag for validation
+		if(xmlStrcasecmp(xmlTextReaderConstLocalName(reader),
+						 (xmlChar *)"container") == 0) {
+			
+			_epub_print_debug(ocf->epub, DEBUG_INFO, 
+							  "Found containerr");
+		// Checking for rootfiles tag for validation
+		} else if(xmlStrcasecmp(xmlTextReaderConstLocalName(reader),
+								(xmlChar *)"rootfiles") == 0) {
+			
+			_epub_print_debug(ocf->epub, DEBUG_INFO, 
+							  "Found rootfiles");
+		} else if (xmlStrcasecmp(xmlTextReaderConstLocalName(reader),
+								 (xmlChar *)"rootfile") == 0) {
+				
+			struct root *newroot = malloc(sizeof(struct root));
+			newroot->mediatype = 
+				xmlTextReaderGetAttribute(reader, (xmlChar *)"media-type");
+			newroot->fullpath =
+				xmlTextReaderGetAttribute(reader, (xmlChar *)"full-path");
+			AddNode(ocf->roots, NewListNode(ocf->roots, newroot));
+			
+				_epub_print_debug(ocf->epub, DEBUG_INFO, 
+								  "found root in %s media-type is %s",
+								  newroot->fullpath, newroot->mediatype);
+				
+		}
+		ret = xmlTextReaderRead(reader);
+	}
+	
     xmlFreeTextReader(reader);
     free(containerXml);
     if (ret != 0) {
