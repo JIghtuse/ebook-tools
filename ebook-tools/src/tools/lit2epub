@@ -25,7 +25,7 @@ fi
 
 
 if [ "x$2" = "x" ]; then
-    EPUB=$(echo $1 |  sed -e 's/.lit/.epub/')
+	EPUB=$(echo $1 | sed -e 's/\.lit$/.epub/')
 else 
     EPUB=$2
 fi
