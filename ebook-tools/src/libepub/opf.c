@@ -648,22 +648,27 @@ void _opf_parse_spine(struct opf *opf, xmlTextReaderPtr reader) {
   opf->tocName = xmlTextReaderGetAttribute(reader, (xmlChar *)"toc");
   
   if (opf->tocName) { 
-    char *tocStr;
+    char *tocStr = NULL;
     struct manifest *item;
     int size;
 
     _epub_print_debug(opf->epub, DEBUG_INFO, "toc is %s", opf->tocName);
     
     item = _opf_manifest_get_by_id(opf, opf->tocName);
-    size = _ocf_get_data_file(opf->epub->ocf, (char *)item->href, &tocStr);
-    
-    if (size <= 0) 
-      _epub_print_debug(opf->epub, DEBUG_ERROR, "unable to open toc file");
-    else
-    _opf_parse_toc(opf, tocStr, size);
-
-    free(tocStr);
-
+	if (item != NULL) {
+		size = _ocf_get_data_file(opf->epub->ocf, (char *)item->href, &tocStr);
+		
+		if (size <= 0) {
+			_epub_print_debug(opf->epub, DEBUG_ERROR, "Faulty toc file %s",
+							  opf->tocName);
+		} else {
+			_opf_parse_toc(opf, tocStr, size);
+			free(tocStr);
+		}
+	} else {
+		_epub_print_debug(opf->epub, DEBUG_ERROR, "Toc not in manifest (-) %s",
+						  opf->tocName);
+	}
   } else {
     _epub_print_debug(opf->epub, DEBUG_WARNING, "toc not found (-)"); 
     opf->toc = NULL;

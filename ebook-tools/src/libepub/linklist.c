@@ -99,22 +99,25 @@ void *FindNode(listPtr List, void *Data)
   if ((List->Flags & LISTADDMASK) & LISTADDSPLAY)
     { /* List is a splay tree; do weirdness... */
       if (SplayList(List, Data) != NULL)
-	Compare = 0;
+		  Compare = 0;
     }
   if ((List->Flags & LISTFLAGMASK) & LISTBTREE)
     { /* List is some other binary tree, do a binary tree search... */
       if (BTFind(List, Data) != NULL)
-	Compare = 0;
+		  Compare = 0;
     }
   else
     { /* List is a normal list, not a tree, step through it... */
       
       List->Current = List->Head;
       if (List->Current == NULL)
-	return NULL;
+		  return NULL;
       
-      while ((Compare = (List->compare)(List->Current->Data, Data)) != 0)
-	List->Current = List->Current->Next;
+      while ((Compare = (List->compare)(List->Current->Data, Data)) != 0) {
+		  List->Current = List->Current->Next;
+		  if (List->Current == NULL)
+			  return NULL; // end of list
+	  }
     }
 
   if (Compare != 0)
