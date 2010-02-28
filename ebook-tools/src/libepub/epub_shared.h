@@ -40,7 +40,7 @@ enum eiterator_type {
   EITERATOR_SPINE, /**< all the spine */  
   EITERATOR_LINEAR, /**< the linear reading spine parts */
   EITERATOR_NONLINEAR /**< the non linear reading spine parts */
-  //  EITERATOR_TOUR,
+  /*  EITERATOR_TOUR */
 };
 
 /**

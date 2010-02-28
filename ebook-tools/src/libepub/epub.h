@@ -11,7 +11,7 @@ struct titerator;
 
 #ifdef __cplusplus
 extern "C" {
-#endif // c++
+#endif /* C++ */
 
   /** 
       This function accepts an epub filename. It then parses its information and
@@ -194,6 +194,6 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif // c++
+#endif /* C++ */
 
-#endif // EPUB_H
+#endif /* EPUB_H */
