@@ -193,6 +193,7 @@ struct epuberr {
   int len;
   int type; /* for str: 0 = lastStr, 1 = external */
 }; 
+extern const char _epub_error_oom[];
 #define _epub_err_set_const_str(_err, _err_string) \
   do { \
     (_err)->str = _err_string; \
@@ -205,6 +206,7 @@ struct epuberr {
     (_err)->str = (_err)->lastStr; \
     (_err)->type = 0; \
   } while (0)
+#define _epub_err_set_oom(_epub_err) _epub_err_set_const_str(_epub_err, _epub_error_oom)
 
 // general structs
 struct epub {

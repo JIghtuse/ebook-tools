@@ -2,6 +2,8 @@
 #include "epublib.h"
 #include <stdarg.h>
 
+const char _epub_error_oom[] = "out of memory";
+
 struct epub *epub_open(const char *filename, int debug) {
   char *opfName = NULL;
   char *opfStr = NULL;
