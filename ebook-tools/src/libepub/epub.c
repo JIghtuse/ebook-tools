@@ -14,8 +14,7 @@ struct epub *epub_open(const char *filename, int debug) {
   }
   epub->ocf = NULL;
   epub->opf = NULL;
-  epub->error.lastStr[0] = 0;
-  epub->error.len = 0;
+  _epub_err_set_str(&epub->error, "", 0);
   epub->debug = debug;
   _epub_print_debug(epub, DEBUG_INFO, "opening '%s'", filename);
   
@@ -400,8 +399,7 @@ void _epub_print_debug(struct epub *epub, int debug, const char *format, ...) {
   strerr[1024] = 0;
   
   if (epub && (debug == DEBUG_ERROR)) {
-    epub->error.len = strlen(strerr);
-    strcpy(epub->error.lastStr, strerr);
+    _epub_err_set_str(&epub->error, strerr, strlen(strerr));
   }
 
   if (! epub || (epub->debug >= debug)) {
@@ -617,21 +615,30 @@ void epub_cleanup() {
 }
 
 char *epub_last_errStr(struct epub *epub) {
-  char *errStr = NULL;
   char *res = NULL;
 
   if (!epub) {
     return NULL;
   }
 
-  errStr = epub->error.lastStr;
-  res = malloc(epub->error.len +1);
-  if (!res) {
-    _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
-    return NULL;
+  switch (epub->error.type) {
+  case 0:
+    res = malloc(epub->error.len + 1);
+    if (!res) {
+      _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
+      return NULL;
+    }
+    strncpy(res, epub->error.lastStr, epub->error.len);
+    res[epub->error.len] = 0;
+    break;
+  case 1:
+    res = strdup(epub->error.str);
+    if (!res) {
+      _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
+      return NULL;
+    }
+    break;
   }
-
-  strcpy(errStr, res);
 
   return res;
 }

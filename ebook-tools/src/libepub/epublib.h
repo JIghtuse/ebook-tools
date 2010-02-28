@@ -189,8 +189,22 @@ struct opf {
 
 struct epuberr {
   char lastStr[1025];
+  char *str;
   int len;
+  int type; /* for str: 0 = lastStr, 1 = external */
 }; 
+#define _epub_err_set_const_str(_err, _err_string) \
+  do { \
+    (_err)->str = _err_string; \
+    (_err)->type = 1; \
+  } while (0)
+#define _epub_err_set_str(_err, _err_string, _err_string_len) \
+  do { \
+    strncpy((_err)->lastStr, _err_string, _err_string_len); \
+    (_err)->len = _err_string_len; \
+    (_err)->str = (_err)->lastStr; \
+    (_err)->type = 0; \
+  } while (0)
 
 // general structs
 struct epub {
