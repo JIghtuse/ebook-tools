@@ -201,6 +201,7 @@ xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type,
   data = malloc(list->Size * sizeof(xmlChar *));
   if (! data) {
     _epub_print_debug(epub, DEBUG_ERROR, "epub_get_metadata: out of memory for allocating a 'XmlChar**'.");
+    return NULL;
   }
   if (size) {
     *size = list->Size;
@@ -259,8 +260,17 @@ char *_get_spine_it_url(struct eiterator *it) {
 struct eiterator *epub_get_iterator(struct epub *epub, 
                                     enum eiterator_type type, int opt) {
 
-  struct eiterator *it = malloc(sizeof(struct eiterator));
-  
+  struct eiterator *it = NULL;
+
+  if (!epub) {
+    return NULL;
+  }
+
+  it = malloc(sizeof(struct eiterator));
+  if (!it) {
+    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_iterator: out of memory for allocating a 'eiterator'.");
+    return NULL;
+  }
   it->type = type;
   it->epub = epub;
   it->opt = opt;
@@ -283,6 +293,10 @@ struct eiterator *epub_get_iterator(struct epub *epub,
 }
 
 void epub_free_iterator(struct eiterator *it) {
+  if (!it) {
+    return;
+  }
+
   if (it->cache)
     free(it->cache);
 
@@ -291,6 +305,10 @@ void epub_free_iterator(struct eiterator *it) {
 
 
 char *epub_it_get_curr_url(struct eiterator *it) {
+  if (!it) {
+    return NULL;
+  }
+
   switch (it->type) {
   case EITERATOR_SPINE:
   case EITERATOR_NONLINEAR:
@@ -303,7 +321,7 @@ char *epub_it_get_curr_url(struct eiterator *it) {
 
 char *epub_it_get_curr(struct eiterator *it) {
 
-  if (!it->curr)
+  if (!it || !it->curr)
     return NULL;
 
   if (!it->cache) {
@@ -320,7 +338,10 @@ char *epub_it_get_curr(struct eiterator *it) {
   return it->cache;
 }
 char *epub_it_get_next(struct eiterator *it) {
-  
+  if (!it) {
+    return NULL;
+  }
+
   if (it->cache) {
     free(it->cache);
     it->cache = NULL;
@@ -348,6 +369,10 @@ char *epub_it_get_next(struct eiterator *it) {
 }
 
 int epub_close(struct epub *epub) {
+  if (!epub) {
+    return 0;
+  }
+
   if (epub->error) 
     free(epub->error);
  
@@ -365,6 +390,10 @@ int epub_close(struct epub *epub) {
 }
 
 void epub_set_debug(struct epub *epub, int debug) {
+  if (!epub) {
+    return;
+  }
+
   epub->debug = debug;
 }
 
@@ -405,7 +434,13 @@ void _epub_print_debug(struct epub *epub, int debug, char *format, ...) {
 }
 
 int epub_tit_next(struct titerator *tit) {
-  listnodePtr curr = tit->next;
+  listnodePtr curr = NULL;
+
+  if (!tit) {
+    return 0;
+  }
+
+  curr = tit->next;
   if (! curr) {
     tit->valid = 0;
     return 0;
@@ -446,7 +481,11 @@ int epub_tit_next(struct titerator *tit) {
 
 struct titerator *epub_get_titerator(struct epub *epub, 
                                      enum titerator_type type, int opt) {
-  struct titerator *it;
+  struct titerator *it = NULL;
+
+  if (!epub) {
+    return NULL;
+  }
 
   switch (type) {
   case TITERATOR_NAVMAP:
@@ -464,6 +503,10 @@ struct titerator *epub_get_titerator(struct epub *epub,
   }
 
   it = malloc(sizeof(struct titerator));
+  if (!it) {
+    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_titerator: out of memory for allocating a 'titerator'.");
+    return NULL;
+  }
   it->type = type;
   it->epub = epub;
   it->opt = opt;
@@ -510,37 +553,68 @@ struct titerator *epub_get_titerator(struct epub *epub,
 }
 
 int epub_tit_curr_valid(struct titerator *tit) {
+  if (!tit) {
+    return 0;
+  }
+
   return tit->valid;
 }
 
 char *epub_tit_get_curr_label(struct titerator *tit) {
+  if (!tit) {
+    return NULL;
+  }
+
   // FIXME how can there be unlabeled curr?
   return tit->cache.label?strdup(tit->cache.label):NULL;
 }
 
 int epub_tit_get_curr_depth(struct titerator *tit) {
+  if (!tit) {
+    return 0;
+  }
+
   return tit->cache.depth;
 }
 
 char *epub_tit_get_curr_link(struct titerator *tit) {
+  if (!tit) {
+    return NULL;
+  }
+
   return strdup(tit->cache.link);
 
 }
 
 void epub_free_titerator(struct titerator *tit) {
+  if (!tit) {
+    return;
+  }
 
   free(tit);
 }
   
 int epub_get_ocf_file(struct epub *epub, const char *filename, char **data) {
+  if (!epub) {
+    return -1;
+  }
+
   return _ocf_get_file(epub->ocf, filename, data);
 }
 
 int epub_get_data(struct epub *epub, const char *name, char **data) {
+  if (!epub) {
+    return -1;
+  }
+
   return _ocf_get_data_file(epub->ocf, name, data);
 }
 
 void epub_dump(struct epub *epub) {
+  if (!epub) {
+    return;
+  }
+
   _ocf_dump(epub->ocf);
   _opf_dump(epub->opf);
 }
@@ -550,8 +624,20 @@ void epub_cleanup() {
 }
 
 char *epub_last_errStr(struct epub *epub) {
-  char *errStr = epub->error->lastStr;
-  char *res = malloc(epub->error->len +1);
+  char *errStr = NULL;
+  char *res = NULL;
+
+  if (!epub) {
+    return NULL;
+  }
+
+  errStr = epub->error->lastStr;
+  res = malloc(epub->error->len +1);
+  if (!res) {
+    _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
+    return NULL;
+  }
+
   strcpy(errStr, res);
 
   return res;
