@@ -189,7 +189,7 @@ struct opf {
 
 struct epuberr {
   char lastStr[1025];
-  char *str;
+  const char *str;
   int len;
   int type; /* for str: 0 = lastStr, 1 = external */
 }; 
