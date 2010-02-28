@@ -270,9 +270,8 @@ struct manifest *_opf_manifest_get_by_id(struct opf *opf, xmlChar* id);
 
 // epub functions
 struct epub *epub_open(const char *filename, int debug);
-void _epub_print_debug(struct epub *epub, int debug, char *format, ...);
+void _epub_print_debug(struct epub *epub, int debug, const char *format, ...);
 char *epub_last_errStr(struct epub *epub);
-void _epub_print_debug(struct epub *epub, int debug, char *format, ...);
 
 // List operations
 void _list_free_root(struct root *data);

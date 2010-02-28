@@ -389,7 +389,7 @@ void epub_set_debug(struct epub *epub, int debug) {
   epub->debug = debug;
 }
 
-void _epub_print_debug(struct epub *epub, int debug, char *format, ...) {
+void _epub_print_debug(struct epub *epub, int debug, const char *format, ...) {
   va_list ap;
   char strerr[1025];
 
