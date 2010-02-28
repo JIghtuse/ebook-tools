@@ -11,7 +11,7 @@ struct epub *epub_open(const char *filename, int debug) {
 
   struct epub *epub = malloc(sizeof(struct epub));
   if (! epub) {
-    _epub_print_debug(NULL, DEBUG_ERROR, "out of memory for allocating a 'epub' object.");
+    _epub_err_set_oom(&epub->error);
     return NULL;
   }
   epub->ocf = NULL;
@@ -197,7 +197,7 @@ xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type,
 
   data = malloc(list->Size * sizeof(xmlChar *));
   if (! data) {
-    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_metadata: out of memory for allocating a 'XmlChar**'.");
+    _epub_err_set_oom(&epub->error);
     return NULL;
   }
   if (size) {
@@ -265,7 +265,7 @@ struct eiterator *epub_get_iterator(struct epub *epub,
 
   it = malloc(sizeof(struct eiterator));
   if (!it) {
-    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_iterator: out of memory for allocating a 'eiterator'.");
+    _epub_err_set_oom(&epub->error);
     return NULL;
   }
   it->type = type;
@@ -497,7 +497,7 @@ struct titerator *epub_get_titerator(struct epub *epub,
 
   it = malloc(sizeof(struct titerator));
   if (!it) {
-    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_titerator: out of memory for allocating a 'titerator'.");
+    _epub_err_set_oom(&epub->error);
     return NULL;
   }
   it->type = type;
@@ -627,7 +627,7 @@ char *epub_last_errStr(struct epub *epub) {
   case 0:
     res = malloc(epub->error.len + 1);
     if (!res) {
-      _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
+      _epub_err_set_oom(&epub->error);
       return NULL;
     }
     strncpy(res, epub->error.lastStr, epub->error.len);
@@ -636,7 +636,7 @@ char *epub_last_errStr(struct epub *epub) {
   case 1:
     res = strdup(epub->error.str);
     if (!res) {
-      _epub_print_debug(epub, DEBUG_ERROR, "epub_last_errStr: out of memory for allocating a 'char*'.");
+      _epub_err_set_oom(&epub->error);
       return NULL;
     }
     break;
