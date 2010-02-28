@@ -22,7 +22,7 @@ int _ocf_parse_container(struct ocf *ocf) {
                     METAINFO_DIR "/" CONTAINER_FILENAME);
 
   char *containerXml = NULL;
-  char *name = CONTAINER_FILENAME;
+  const char *name = CONTAINER_FILENAME;
   if (! _ocf_get_file(ocf, METAINFO_DIR "/" CONTAINER_FILENAME, &containerXml))
     return 0;
   
