@@ -190,7 +190,7 @@ struct epuberr {
 struct epub {
   struct ocf *ocf;
   struct opf *opf;
-  struct epuberr *error;
+  struct epuberr error;
   int debug;
 
 };
