@@ -23,6 +23,12 @@
 # define PATH_SEPARATOR '/'
 #endif
 
+#ifdef __GNUC__
+# define PRINTF_FORMAT(si, ftc) __attribute__ ((format (printf, si, ftc)))
+#else
+# define PRINTF_FORMAT(si, ftc)
+#endif
+
 // MSVC-specific definitions
 #ifdef _MSC_VER
 # define strdup _strdup
@@ -270,7 +276,7 @@ struct manifest *_opf_manifest_get_by_id(struct opf *opf, xmlChar* id);
 
 // epub functions
 struct epub *epub_open(const char *filename, int debug);
-void _epub_print_debug(struct epub *epub, int debug, const char *format, ...);
+void _epub_print_debug(struct epub *epub, int debug, const char *format, ...) PRINTF_FORMAT(3, 4);
 char *epub_last_errStr(struct epub *epub);
 
 // List operations
