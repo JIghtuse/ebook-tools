@@ -30,7 +30,7 @@ enum epub_metadata {
   EPUB_RELATION, /**< ebook relation*/  
   EPUB_COVERAGE, /**< ebook coverage*/ 
   EPUB_RIGHTS,/**< ebook rights */ 
-  EPUB_META, /**< ebook extra metadata*/ 
+  EPUB_META /**< ebook extra metadata*/ 
 };
 
 /**
@@ -39,7 +39,7 @@ enum epub_metadata {
 enum eiterator_type {
   EITERATOR_SPINE, /**< all the spine */  
   EITERATOR_LINEAR, /**< the linear reading spine parts */
-  EITERATOR_NONLINEAR, /**< the non linear reading spine parts */
+  EITERATOR_NONLINEAR /**< the non linear reading spine parts */
   //  EITERATOR_TOUR,
 };
 
@@ -49,7 +49,7 @@ enum eiterator_type {
 enum titerator_type {
   TITERATOR_NAVMAP, /**< Navigation map  */
   TITERATOR_GUIDE, /**< Guide to the ebook parts */
-  TITERATOR_PAGES, /**< The pages of the ebook */
+  TITERATOR_PAGES /**< The pages of the ebook */
 };
 
 #endif
