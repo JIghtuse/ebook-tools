@@ -7,10 +7,19 @@ struct epub *epub_open(const char *filename, int debug) {
   char *opfStr = NULL;
 
   struct epub *epub = malloc(sizeof(struct epub));
+  if (! epub) {
+    _epub_print_debug(NULL, DEBUG_ERROR, "out of memory for allocating a 'epub' object.");
+    return NULL;
+  }
   epub->ocf = NULL;
   epub->opf = NULL;
 
   epub->error = malloc(sizeof(struct epuberr));
+  if (! epub->error) {
+    _epub_print_debug(epub, DEBUG_ERROR, "out of memory for allocating a 'epuberr' object.");
+    epub_close(epub);
+    return NULL;
+  }
   epub->debug = debug;
   _epub_print_debug(epub, DEBUG_INFO, "opening %s", filename);
   
