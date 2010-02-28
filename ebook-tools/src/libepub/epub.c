@@ -356,12 +356,12 @@ void _epub_print_debug(struct epub *epub, int debug, char *format, ...) {
   vsnprintf(strerr, 1024, format, ap);
   strerr[1024] = 0;
   
-  if (debug == DEBUG_ERROR) {
+  if (epub && (debug == DEBUG_ERROR)) {
     epub->error->len = strlen(strerr);
     strcpy(epub->error->lastStr, strerr);
   }
 
-  if (epub->debug >= debug) {
+  if (! epub || (epub->debug >= debug)) {
     fprintf(stderr, "libepub ");
     switch(debug) {
     case DEBUG_ERROR: 
