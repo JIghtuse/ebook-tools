@@ -194,16 +194,18 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
   _epub_print_debug(epub, DEBUG_INFO, "building ocf struct");
   
   struct ocf *ocf = malloc(sizeof(struct ocf));
+  memset(ocf, 0, sizeof(struct ocf));
   ocf->epub = epub;
-  ocf->datapath = NULL;
   ocf->roots = NewListAlloc(LIST, NULL, NULL, 
                             (NodeCompareFunc)_list_cmp_root_by_mediatype);
   ocf->filename = malloc(sizeof(char)*(strlen(filename)+1));
 
   strcpy(ocf->filename, filename);
   
-  if (! (ocf->arch = _ocf_open(ocf, ocf->filename)))
+  if (! (ocf->arch = _ocf_open(ocf, ocf->filename))) {
+    _ocf_close(ocf);
     return NULL;
+  }
   
   // Find the mime type
   _ocf_parse_mimetype(ocf);
