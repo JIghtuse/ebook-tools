@@ -21,7 +21,7 @@ struct epub *epub_open(const char *filename, int debug) {
     return NULL;
   }
   epub->debug = debug;
-  _epub_print_debug(epub, DEBUG_INFO, "opening %s", filename);
+  _epub_print_debug(epub, DEBUG_INFO, "opening '%s'", filename);
   
   LIBXML_TEST_VERSION;
   
@@ -120,6 +120,11 @@ xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type,
   xmlChar *(*getStr)(void *);
   int i;
 
+  if (!epub || !epub->opf || !epub->opf->metadata) {
+    _epub_print_debug(epub, DEBUG_INFO, "no metadata information available");
+    return NULL;
+  }
+
   switch(type) {
   case EPUB_ID:
     list = epub->opf->metadata->id;
@@ -185,6 +190,9 @@ xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type,
     list = epub->opf->metadata->meta;
     getStr = _getMetaStr;
     break;
+  default:
+    _epub_print_debug(epub, DEBUG_INFO, "fetching metadata: unknown type %d", type);
+    return NULL;
   }
 
   *size = list->Size;
