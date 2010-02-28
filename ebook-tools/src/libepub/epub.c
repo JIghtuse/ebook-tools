@@ -116,8 +116,8 @@ xmlChar *_getRoleStr(void *creator) {
 xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type, 
                             int *size) {
   xmlChar **data = NULL;
-  listPtr list;
-  xmlChar *(*getStr)(void *);
+  listPtr list = NULL;
+  xmlChar *(*getStr)(void *) = NULL;
   int i;
 
   if (!epub || !epub->opf || !epub->opf->metadata) {
@@ -195,12 +195,16 @@ xmlChar **epub_get_metadata(struct epub *epub, enum epub_metadata type,
     return NULL;
   }
 
-  *size = list->Size;
   if (list->Size <= 0)
     return NULL;
 
   data = malloc(list->Size * sizeof(xmlChar *));
-  
+  if (! data) {
+    _epub_print_debug(epub, DEBUG_ERROR, "epub_get_metadata: out of memory for allocating a 'XmlChar**'.");
+  }
+  if (size) {
+    *size = list->Size;
+  }
   list->Current = list->Head;
 
   data[0] = getStr(GetNode(list));
