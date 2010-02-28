@@ -29,14 +29,15 @@ int main(int argc , char **argv) {
   char *tourId = NULL;
   int verbose = 0, print = 0, debug = 0, quiet = 0, tour = 0;
   
-  int i, j;
+  int i, j, len;
   
   for (i = 1;i<argc;i++) {
     loop:          
 
     if (argv[i][0] == '-') {
+      len = strlen(argv[i]);
 
-      for (j = 1;j<strlen(argv[i]);j++) {
+      for (j = 1;j<len;j++) {
         switch(argv[i][j]) {
         case 'v':
           verbose++;
