@@ -5,6 +5,7 @@
 struct epub *epub_open(const char *filename, int debug) {
   char *opfName = NULL;
   char *opfStr = NULL;
+  char *pathsep_index = NULL;
 
   struct epub *epub = malloc(sizeof(struct epub));
   if (! epub) {
@@ -33,10 +34,10 @@ struct epub *epub_open(const char *filename, int debug) {
   }
 
   epub->ocf->datapath = malloc(sizeof(char) *(strlen(opfName) +1));
-  char *index = strrchr(opfName, PATH_SEPARATOR);
-  if (index) {
-    strncpy(epub->ocf->datapath, opfName, index + 1 - opfName); 
-    epub->ocf->datapath[index - opfName + 1] = 0;
+  pathsep_index = strrchr(opfName, PATH_SEPARATOR);
+  if (pathsep_index) {
+    strncpy(epub->ocf->datapath, opfName, pathsep_index + 1 - opfName); 
+    epub->ocf->datapath[pathsep_index - opfName + 1] = 0;
   }    
   else {
     epub->ocf->datapath[0] = 0;
