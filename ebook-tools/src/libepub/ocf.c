@@ -136,42 +136,38 @@ int _ocf_get_file(struct ocf *ocf, const char *filename, char **fileStr) {
   struct zip *arch = ocf->arch;
   
   struct zip_file *file = NULL;
-  struct zip_stat *fileStat = malloc(sizeof(struct zip_stat));
+  struct zip_stat fileStat;
 
+  zip_stat_init(&fileStat);
   *fileStr = NULL;
 
-  if (zip_stat(arch, filename, ZIP_FL_UNCHANGED, fileStat) == -1) {
+  if (zip_stat(arch, filename, ZIP_FL_UNCHANGED, &fileStat) == -1) {
     _epub_print_debug(epub, DEBUG_INFO, "%s - %s", 
                       filename, zip_strerror(arch));
-    free(fileStat);
     return -1;
   }
 
-  if (! (file = zip_fopen_index(arch, fileStat->index, ZIP_FL_NODIR))) {
+  if (! (file = zip_fopen_index(arch, fileStat.index, ZIP_FL_NODIR))) {
     _epub_print_debug(epub, DEBUG_INFO, "%s - %s", 
                       filename, zip_strerror(arch));
-    free(fileStat);
     return -1;
   }
 
-  *fileStr = (char *)malloc((fileStat->size+1)* sizeof(char));
+  *fileStr = (char *)malloc((fileStat.size+1)* sizeof(char));
   
   int size;
-  if ((size = zip_fread(file, *fileStr, fileStat->size)) == -1) {
+  if ((size = zip_fread(file, *fileStr, fileStat.size)) == -1) {
     _epub_print_debug(epub, DEBUG_INFO, "%s - %s", 
                       filename, zip_strerror(arch));
   } else {
     (*fileStr)[size] = 0;
   }
-  
-  free(fileStat);
 
   if (zip_fclose(file) == -1) {
     _epub_print_debug(epub, DEBUG_INFO, "%s - %s", 
                       filename, zip_strerror(arch));
     free(*fileStr);
     *fileStr = NULL;
-    free(fileStat);
     return -1;
   }
   
