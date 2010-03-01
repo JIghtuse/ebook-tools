@@ -1,20 +1,21 @@
 #!/bin/sh
 # Uses clit to convert .lit files to valid epub
 # known issues: created metadata uses the old spec
+
+check_tool()
+{
+    var=$1
+    tool=$2
+    toolpath=$(which $tool 2>/dev/null)
+    if [ "$?" != 0 ]; then
+        echo "Cannot find $tool, please make sure it is in your PATH"
+        exit 1
+    fi
+    eval "$var=$toolpath"
+}
  
-CLIT=$(which clit)
-
-if [ "$?" != 0 ]; then
-    echo "Can't find clit, please make sure it is in your path"
-    exit 1
-fi
-
-ZIP=$(which zip)
-
-if [ "$?" != 0 ]; then
-    echo "Can't find zip, please make sure it is in your path"
-    exit 1
-fi
+check_tool CLIT clit
+check_tool ZIP zip
 
 LIT=$1
 
