@@ -4,6 +4,10 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
   _epub_print_debug(epub, DEBUG_INFO, "building opf struct");
   
   struct opf *opf = malloc(sizeof(struct opf));
+  if (!opf) {
+    _epub_err_set_oom(&epub->error);
+    return NULL;
+  }
   memset(opf, 0, sizeof(struct opf));
   opf->epub = epub;
  

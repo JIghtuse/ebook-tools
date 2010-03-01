@@ -56,6 +56,11 @@ struct epub *epub_open(const char *filename, int debug) {
   }
 
   epub->opf = _opf_parse(epub, opfStr);
+  if (!epub->opf) {
+    free(opfStr);
+    epub_close(epub);
+    return NULL;
+  }
   
   free(opfStr);
 

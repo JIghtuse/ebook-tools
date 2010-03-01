@@ -190,6 +190,10 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
   _epub_print_debug(epub, DEBUG_INFO, "building ocf struct");
   
   struct ocf *ocf = malloc(sizeof(struct ocf));
+  if (!ocf) {
+    _epub_err_set_oom(&epub->error);
+    return NULL;
+  }
   memset(ocf, 0, sizeof(struct ocf));
   ocf->epub = epub;
   ocf->roots = NewListAlloc(LIST, NULL, NULL, 
