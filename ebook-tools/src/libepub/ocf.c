@@ -247,6 +247,10 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
 
 int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr) {
   int size;
+  if (! filename) {
+	  return -1;
+  }
+
   char *fullname = malloc((strlen(filename)+strlen(ocf->datapath)+1)*sizeof(char));
 
   if (!fullname) {

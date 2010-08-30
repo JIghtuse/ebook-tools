@@ -251,11 +251,20 @@ listnodePtr _get_spine_it_next(listnodePtr curr, int linear, int init) {
 char *_get_spine_it_url(struct eiterator *it) {
   struct manifest *tmp;
   void *data;
+
+  if (!it) 
+	  return NULL;
   
   data = GetNodeData(it->curr);
   tmp = _opf_manifest_get_by_id(it->epub->opf, 
                                 ((struct spine *)data)->idref);
-  
+  if (!tmp) {
+	  _epub_print_debug(it->epub, DEBUG_ERROR, 
+						"spine parsing error idref %s is not in the manifest",
+						((struct spine *)data)->idref);
+	  return NULL;
+  }
+
   return (char *)tmp->href;
 }
 
