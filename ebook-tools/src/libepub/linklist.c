@@ -275,7 +275,7 @@ int TailList(listPtr List, listnodePtr Node)
   
 int SplayRemoveList(listPtr List)
 {
-  listnodePtr DelNode;
+  listnodePtr _DelNode;
 
   if (List == NULL) return LLIST_NULL;
   if (List->Head == NULL) return LLIST_NOERROR;
@@ -283,7 +283,7 @@ int SplayRemoveList(listPtr List)
   /* Assumes List->Head (root of splay tree) is already selected to
      be deleted node */
 
-  DelNode = List->Head;
+  _DelNode = List->Head;
   if (List->Head->Next == NULL)
     List->Head = List->Head->Prev;
   else 
@@ -291,13 +291,13 @@ int SplayRemoveList(listPtr List)
       if (List->Head->Prev != NULL)
 	{
 	  SplayList(List, List->Head->Prev->Data);   /* Must succeed */
-	  List->Head->Next = DelNode->Next;
+	  List->Head->Next = _DelNode->Next;
 	}
       else
 	List->Head = List->Head->Next;
     }
   
-  List->memfree(DelNode);
+  List->memfree(_DelNode);
   List->Current = List->Head;
   
   List->Size--;
