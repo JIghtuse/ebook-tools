@@ -262,7 +262,7 @@ int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr) {
   return size;
 }
 
-char *_ocf_root_fullpath_by_type(struct ocf *ocf, char *type) {
+char *_ocf_root_fullpath_by_type(struct ocf *ocf, const char *type) {
   struct root look = {(xmlChar *)type, NULL};
   struct root *res;
   
@@ -277,7 +277,7 @@ char *_ocf_root_fullpath_by_type(struct ocf *ocf, char *type) {
     
 }
 
-char *_ocf_root_by_type(struct ocf *ocf, char *type) {
+char *_ocf_root_by_type(struct ocf *ocf, const char *type) {
   struct root look = {(xmlChar *)type, NULL};
   struct root *res;
   char *rootXml = NULL;

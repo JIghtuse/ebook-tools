@@ -256,8 +256,8 @@ struct zip *_ocf_open(struct ocf *ocf, const char *fileName);
 int _ocf_get_file(struct ocf *ocf, const char *filename, char **fileStr);
 int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr);
 int _ocf_check_file(struct ocf *ocf, const char *filename);
-char *_ocf_root_by_type(struct ocf *ocf, char *type);
-char *_ocf_root_fullpath_by_type(struct ocf *ocf, char *type);
+char *_ocf_root_by_type(struct ocf *ocf, const char *type);
+char *_ocf_root_fullpath_by_type(struct ocf *ocf, const char *type);
 
 // Parsing ocf
 int _ocf_parse_container(struct ocf *ocf);
