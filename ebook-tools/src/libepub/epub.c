@@ -11,7 +11,6 @@ struct epub *epub_open(const char *filename, int debug) {
 
   struct epub *epub = malloc(sizeof(struct epub));
   if (! epub) {
-    _epub_err_set_oom(&epub->error);
     return NULL;
   }
   epub->ocf = NULL;
