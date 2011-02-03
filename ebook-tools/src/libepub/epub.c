@@ -34,7 +34,7 @@ struct epub *epub_open(const char *filename, int debug) {
   }
 
   epub->ocf->datapath = malloc(sizeof(char) *(strlen(opfName) +1));
-  pathsep_index = strrchr(opfName, PATH_SEPARATOR);
+  pathsep_index = strrchr(opfName, '/'); // '/' is per OCF specs
   if (pathsep_index) {
     strncpy(epub->ocf->datapath, opfName, pathsep_index + 1 - opfName); 
     epub->ocf->datapath[pathsep_index - opfName + 1] = 0;
