@@ -8,6 +8,8 @@ set(EXECUTABLE_OUTPUT_PATH ${EBOOK-TOOLS_BINARY_DIR}/bin)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+set(LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (32/64)")
+
 find_package(LibXml2 REQUIRED)
 find_package(LibZip REQUIRED)
 
