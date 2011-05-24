@@ -21,17 +21,16 @@ int _ocf_parse_mimetype(struct ocf *ocf) {
 }
 
 int _ocf_parse_container(struct ocf *ocf) {
+  char *containerXml = NULL;
+  const char *name = CONTAINER_FILENAME;
+  xmlTextReaderPtr reader;
+  int ret;
 
   _epub_print_debug(ocf->epub, DEBUG_INFO, "parsing container file %s", 
                     METAINFO_DIR "/" CONTAINER_FILENAME);
 
-  char *containerXml = NULL;
-  const char *name = CONTAINER_FILENAME;
   if (! _ocf_get_file(ocf, METAINFO_DIR "/" CONTAINER_FILENAME, &containerXml))
     return 0;
-  
-  xmlTextReaderPtr reader;
-  int ret;
 
   reader = xmlReaderForMemory(containerXml, strlen(containerXml), 
                               name, NULL, 0);
@@ -148,6 +147,8 @@ int _ocf_get_file(struct ocf *ocf, const char *filename, char **fileStr) {
   struct zip_file *file = NULL;
   struct zip_stat fileStat;
 
+  int size;
+
   zip_stat_init(&fileStat);
   *fileStr = NULL;
 
@@ -169,7 +170,6 @@ int _ocf_get_file(struct ocf *ocf, const char *filename, char **fileStr) {
 	  return -1;
   }
   
-  int size;
   if ((size = zip_fread(file, *fileStr, fileStat.size)) == -1) {
     _epub_print_debug(epub, DEBUG_INFO, "%s - %s", 
                       filename, zip_strerror(arch));
@@ -201,9 +201,11 @@ void _ocf_not_supported(struct ocf *ocf, const char *filename) {
 }
 
 struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
+  struct ocf *ocf;
+
   _epub_print_debug(epub, DEBUG_INFO, "building ocf struct");
   
-  struct ocf *ocf = malloc(sizeof(struct ocf));
+  ocf = malloc(sizeof(struct ocf));
   if (!ocf) {
     _epub_err_set_oom(&epub->error);
     return NULL;
@@ -247,11 +249,13 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
 
 int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr) {
   int size;
+  char *fullname;
+
   if (! filename) {
 	  return -1;
   }
 
-  char *fullname = malloc((strlen(filename)+strlen(ocf->datapath)+1)*sizeof(char));
+  fullname = malloc((strlen(filename)+strlen(ocf->datapath)+1)*sizeof(char));
 
   if (!fullname) {
 	  _epub_print_debug(ocf->epub, DEBUG_ERROR, "Failed to allocate memory for file name");
