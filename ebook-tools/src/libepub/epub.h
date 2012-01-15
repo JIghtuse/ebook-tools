@@ -65,16 +65,20 @@ extern "C" {
   EPUB_EXPORT void epub_dump(struct epub *epub);
   
     
-  /** 
-      (Bad xml might cause some of it to be NULL).
+  /**
+	 Returns the metadata by type as an array of xml strings.
+	 (Bad xml might cause some of it to be NULL).
 
-      @param epub the struct .
+	 @param epub the struct.
+	 @param type the type of metadata to look for (must be valid)
+	 @param size the number of entries for the given metadata (array size) 
+	 @Returns an array with the values of the asked metadata type entries.
   */
   EPUB_EXPORT unsigned char **epub_get_metadata(struct epub *epub, enum epub_metadata type,
                                                 int *size);
 
   /** 
-      returns the file with the give filename. The file is looked
+      Returns the file with the give filename. The file is looked
       for in the data directory. (Useful for getting book files). 
 
       @param epub struct of the epub file we want to read from
