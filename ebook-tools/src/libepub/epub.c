@@ -588,6 +588,10 @@ char *epub_tit_get_curr_link(struct titerator *tit) {
     return NULL;
   }
 
+  if (!tit->cache.link) {
+	  return NULL;
+  }
+  
   return strdup(tit->cache.link);
 
 }
