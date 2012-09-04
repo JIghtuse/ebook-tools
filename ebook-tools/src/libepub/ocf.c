@@ -29,7 +29,7 @@ int _ocf_parse_container(struct ocf *ocf) {
   _epub_print_debug(ocf->epub, DEBUG_INFO, "parsing container file %s", 
                     METAINFO_DIR "/" CONTAINER_FILENAME);
 
-  if (! _ocf_get_file(ocf, METAINFO_DIR "/" CONTAINER_FILENAME, &containerXml))
+  if (_ocf_get_file(ocf, METAINFO_DIR "/" CONTAINER_FILENAME, &containerXml) == -1)
     return 0;
 
   reader = xmlReaderForMemory(containerXml, strlen(containerXml), 
