@@ -163,10 +163,24 @@ void _list_dump_root(struct root *root) {
          root->fullpath, root->mediatype);
 }
 void _list_dump_spine(struct spine *spine) {
-  printf("%s", spine->idref);
+  printf("   %s", spine->idref);
   if (spine->linear) 
     printf("(L)");
-  printf(" ");
+  switch (spine->spreadPosition) {
+  case PAGE_SPREAD_CENTER:
+    printf("(CENTER)");
+    break;
+  case PAGE_SPREAD_LEFT:
+    printf("(LEFT)");
+    break;
+  case PAGE_SPREAD_RIGHT:
+    printf("(RIGHT)");
+    break;
+  default:
+    printf("(UNKNOWN)");
+    break;
+  }
+  printf(" \n");
 }
 
 void _list_dump_spine_linear(struct spine *spine) {
@@ -198,6 +212,20 @@ void _list_dump_meta(struct meta *meta) {
   
   if (meta->content)
     printf("%s", meta->content);
+  else 
+    printf("unspecified");
+
+  printf(" : ");
+
+  if (meta->property)
+    printf("%s", meta->property);
+  else 
+    printf("unspecified");
+
+  printf(" : ");
+
+  if (meta->value)
+    printf("%s", meta->value);
   else 
     printf("unspecified");
   

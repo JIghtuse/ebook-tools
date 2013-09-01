@@ -65,6 +65,8 @@ struct ocf {
 struct meta {
   xmlChar *name;
   xmlChar *content;
+  xmlChar *property;
+  xmlChar *value;
 };
 
 struct id {
@@ -170,6 +172,7 @@ struct toc {
 struct spine {
   xmlChar *idref;
   int linear; //bool
+  enum page_spread_position spreadPosition;
 };
 
 struct opf {

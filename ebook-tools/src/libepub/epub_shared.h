@@ -52,4 +52,14 @@ enum titerator_type {
   TITERATOR_PAGES /**< The pages of the ebook */
 };
 
+/**
+   The page-spread-* properties
+*/
+enum page_spread_position {
+  PAGE_SPREAD_CENTER,
+  PAGE_SPREAD_LEFT,
+  PAGE_SPREAD_RIGHT,
+  PAGE_SPREAD_UNKNOWN
+};
+
 #endif
