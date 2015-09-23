@@ -218,6 +218,7 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
 
   if ( ! ocf->filename) {
 	  _epub_print_debug(epub, DEBUG_ERROR, "Failed to allocate memory for filename");
+	  _ocf_close(ocf);
 	  return NULL;
   }
 

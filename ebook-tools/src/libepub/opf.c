@@ -42,13 +42,16 @@ struct opf *_opf_parse(struct epub *epub, char *opfStr) {
     xmlFreeTextReader(reader);
     if (ret != 0) {
       _epub_print_debug(opf->epub, DEBUG_ERROR, "failed to parse OPF");
+      _opf_close(opf);
       return NULL;
     } else if(!opf->spine) {
 		_epub_print_debug(opf->epub, DEBUG_ERROR, "Ilegal OPF no spine found");
+		_opf_close(opf);
 		return NULL;
 	}
    } else {
      _epub_print_debug(opf->epub, DEBUG_ERROR, "unable to open OPF");
+     _opf_close(opf);
      return NULL;
    }
 
