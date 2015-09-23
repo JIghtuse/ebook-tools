@@ -503,7 +503,7 @@ struct titerator *epub_get_titerator(struct epub *epub,
       return NULL;
     break;
   case TITERATOR_PAGES:
-    if (! epub->opf->toc || epub->opf->toc->pageList)
+    if (! epub->opf->toc || ! epub->opf->toc->pageList)
       return NULL;
     break;
   }
