@@ -1,4 +1,5 @@
 #include "epublib.h"
+#include "path.h"
 
 int _ocf_parse_mimetype(struct ocf *ocf) {
 
@@ -251,6 +252,7 @@ struct ocf *_ocf_parse(struct epub *epub, const char *filename) {
 int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr) {
   int size;
   char *fullname;
+  char *canon_name;
 
   if (! filename) {
 	  return -1;
@@ -265,8 +267,11 @@ int _ocf_get_data_file(struct ocf *ocf, const char *filename, char **fileStr) {
 
   strcpy(fullname, ocf->datapath);
   strcat(fullname, filename);
-  size = _ocf_get_file(ocf, fullname, fileStr);
+  canon_name = canonicalize_filename(fullname);
+
+  size = _ocf_get_file(ocf, canon_name, fileStr);
   free(fullname);
+  free(canon_name);
 
   return size;
 }
