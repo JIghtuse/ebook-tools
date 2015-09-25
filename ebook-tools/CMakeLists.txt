@@ -1,4 +1,4 @@
-project (EBOOK-TOOLS C)
+project (EBOOK-TOOLS)
 
 cmake_minimum_required(VERSION 2.4.0)
 
@@ -23,3 +23,4 @@ endif(MSVC)
 INCLUDE("${CMAKE_MODULE_PATH}/TargetDoc.cmake" OPTIONAL)
 
 add_subdirectory (src)
+add_subdirectory (tests)

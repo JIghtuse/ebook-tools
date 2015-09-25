@@ -3,7 +3,7 @@
 
 // We need canonicalize_file_name (3) equivalent for files in zip archive:
 // process "..", "//", but not symlinks/hardlinks
-// TODO: Add tests. Add more tests.
+// TODO: Add more tests.
 // TODO: get rid of buffer?
 // TODO: simplify it?
 #define MAX_PATH_SIZE 4096
