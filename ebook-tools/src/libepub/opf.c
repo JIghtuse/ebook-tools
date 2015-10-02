@@ -1,4 +1,5 @@
 #include "epublib.h"
+#include "url.h"
 
 struct opf *_opf_parse(struct epub *epub, char *opfStr) {
   struct opf *opf;
@@ -436,8 +437,10 @@ void _opf_parse_navmap(struct opf *opf, xmlTextReaderPtr reader) {
                             "nav info inside nav point element");
     } else 
       if (! xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"content")) {
-        if (item)
+        if (item) {
           item->src = xmlTextReaderGetAttribute(reader, (xmlChar *)"src");
+          url_decode(item->src, strlen(item->src));
+        }
         else
           _epub_print_debug(opf->epub, DEBUG_WARNING, 
                             "content not inside nav point element");  
@@ -515,8 +518,10 @@ void _opf_parse_navlist(struct opf *opf, xmlTextReaderPtr reader) {
                           "nav info inside nav target element");
     } else 
       if (! xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"content")) {
-        if (item)
+        if (item) {
           item->src = xmlTextReaderGetAttribute(reader, (xmlChar *)"src");
+          url_decode(item->src, strlen(item->src));
+        }
         else
           _epub_print_debug(opf->epub, DEBUG_WARNING, 
                             "content not inside nav target element");  
@@ -594,8 +599,10 @@ void _opf_parse_pagelist(struct opf *opf, xmlTextReaderPtr reader) {
                           "nav info inside page target element");
     } else 
       if (! xmlStrcasecmp(xmlTextReaderConstName(reader),(xmlChar *)"content")) {
-        if (item)
+        if (item) {
           item->src = xmlTextReaderGetAttribute(reader, (xmlChar *)"src");
+          url_decode(item->src, strlen(item->src));
+        }
         else
           _epub_print_debug(opf->epub, DEBUG_WARNING, 
                             "content not inside nav target element");  
@@ -766,6 +773,7 @@ void _opf_parse_manifest(struct opf *opf, xmlTextReaderPtr reader) {
 
     item->id = xmlTextReaderGetAttribute(reader, (xmlChar *)"id");
     item->href = xmlTextReaderGetAttribute(reader, (xmlChar *)"href");
+    url_decode(item->href, strlen(item->href));
     item->type = xmlTextReaderGetAttribute(reader, (xmlChar *)"media-type");
     item->fallback = xmlTextReaderGetAttribute(reader, (xmlChar *)"fallback");
     item->fbStyle = 
